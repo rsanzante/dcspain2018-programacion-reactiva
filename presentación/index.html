@@ -91,8 +91,10 @@
           </ul>
           <aside class="notes">
             <ul>
+              <li></li>
               <li>For example, combining data from different external APIs.</li>
               <li>Ah, that little asterisk? This is true, but you have to 'deprogram' yourself a little bit from the structured, object-oriented programming paradigm.</li>
+              <li></li>
             </ul>
 
             <strong>Fine, but.... What do we mean by asynchronicity?</strong>
@@ -117,7 +119,7 @@
           </ul>
           <aside class="notes">
             <ul>
-              <li>Events that happen over time that we can't predict. This is very common in the browser because it's an asynchronous environment. If we examine a Druapl request we find that the exeuction path is more o less predictible (complex but predictible), and data is available when needed (when a database query is done we asume that result, success or failure, is available in the next line of code, the same for reading a file). In browser this is not true. We don't know when many operations will return their data: AJAX operations are the main example, but it's the same for workers, for example. User interaction, WebSockets, timers and animation are other sources or asynchronicty. </li>
+              <li>Events that happen over time that we can't predict. This is very common in the browser because it's an asynchronous environment. If we examine a Druapl request we find that the exeuction path is more o less predictible (complex but predictible), and data is available when needed (when a database query is done we asume that result, success or failure, is available in the next line of code, the same for reading a file). In browser this is not true. We don't know when many operations will return their data: AJAX operations are the main example, but it's the same for workers, for example. User interaction, WebSockets, timers and animations are other sources of asynchronicty. </li>
             </ul>
             <strong>How we can manage this uncertainty, this asynchronicty?</strong>
 
@@ -183,7 +185,7 @@ doc = memResponse;
             </pre>
           <aside class="notes">
             <ul>
-              <li>Callback hell is typical from callbacks. It's a nested code because of sucesive callbacks.</li>
+              <li>Callback hell is typical from callbacks. It's a nested code because of successive callbacks.</li>
               <li>This code is not easy to read, is not clean and is not elegant.</li>
             </ul>
 
@@ -227,9 +229,10 @@ doc = memResponse;
           </ul>
           <aside class="notes">
           <ul>
-            <li>If you want to repeat an action you must run the code that makes the action and processes the response of the promise again. Usually you can do it calling again the function that manages this, so it's not a big deal.. But you'll need to control this re-execution process.</li>
-            <li>This works well for managing setTimeouts or simple HTTP request responses, but falls short when dealing with setInterval or WebSockets, for example. Once the promise has been fullfilled it no longer returns more values. </li>
+            <li>If you want to repeat an action you must run the code that makes the action and processes the response of the promise again. Usually you can do it calling again the function that manages this, so it's not a big deal.. But you'll need to control this re-execution process.<br>
+            This works well for managing setTimeouts or simple HTTP request responses, but falls short when dealing with setInterval or WebSockets, for example. Once the promise has been fullfilled it no longer returns more values. </li>
             (https://medium.com/@mpodlasin/promises-vs-observables-4c123c51fe13)
+            <li>(https://pouchdb.com/2015/05/18/we-have-a-problem-with-promises.html)</li>
             <li>As the promise is created the code that tries to solve it is executed immediately. It is assumed that the answer is needed now.</li>
             <li>Except using some libraries like Bluebird, once the promise is created it will try to resolve or fail, but it cannot be cancelled (although it can be ignored, of course). This can result in wasted resources.</li>
           </ul>
@@ -253,7 +256,6 @@ doc = memResponse;
           </ul>
          <aside class="notes">
             <ul>
-              <li>Transformations are not trivial. A URL becomes the content of that URL (as a request to a service), which then becomes a list of instantiated objects based on the data received.</li>
             </ul>
           <strong>Let's see the necessary concepts.</strong>
           </aside>
@@ -291,7 +293,6 @@ jQuery('#grip').click(function() {
             <img  class="fragment" src="assets/images/camino_simple2_en.png">
           </div>
           <aside class="notes">
-          Keep an eye on what we're getting into. I invented this concept, don't look for it.
           This is an example of a very simple data path, the simplest of all. An event is generated in the browser, which is captured and the appropriate action is taken, in this case showing an element of the DOM. There we see a flow of data that goes from the broadcast of the event to its reception in the listener. Nothing mysterious.
 
           <strong>What would be a complex pipe?</strong>
@@ -333,17 +334,12 @@ jQuery('#grip').click(function() {
             <li class="fragment">They emmit data until they finish or an error is triggered.</li>
           </ul>
         <aside class="notes">
+            First main piece: Observables<br>
             <ul>
-              <li>First main piece: Observables</li>
-              <li>They are more than just data stream, but I don't want to get into thick definitions tećnicas</li>
               <li>Let's say that are just things that can be observed, boxes where the data comes from, basically they are the observed part of the Observer pattern.</li>
-              <li>In the previous dialogs you could say that they are the little arrows that connect the different boxes. </li>
+              <li>They are more than just data stream, but I don't want to get into thick technical definitions, so let's say they are data streams</li>
               <li></li>
-              <li></li>
-              <li></li>
-              <li></li>
-              <li></li>
-              <li></li>
+              In the previous diagrams you could say that they are the little arrows that connect the different boxes. <br>
             </ul>
 <!--
           Ben Leash, qués un observable haciendo uno.
@@ -460,8 +456,9 @@ jQuery('#grip').click(function() {
 
 <span class="fragment">btP$.subscribe(() => clockOn = !clockOn);</span>
 
-<span class="fragment">clock$.do(x => output1.innerHTML = x)</span>
-  <span class="fragment">.combineLatest(btS$, v => v)</span>
+<span class="fragment">clock$.subscribe(x => output1.innerHTML = x)</span>
+
+<span class="fragment">clock$.combineLatest(btS$, v => v)</span>
   <span class="fragment">.filter(() => clockOn)</span>
   <span class="fragment">.subscribe(() => output2.innerHTML = ++clockValue);</span>
               </code>
@@ -538,9 +535,9 @@ jQuery('#grip').click(function() {
     text.appendChild(createItem(1));
 });<span>
 
-<span class="fragment">multiClickStream.throttle(1000)</span>
+<span class="fragment">multiClickStream.delay(3000)</span>
 <span class="fragment">    .subscribe(suggestion => {
-      text.appendChild(createItem(numclicks))
+      text.removeChild(h2elem.firstChild)
     });
 </span>
             </code>
