@@ -1,4 +1,4 @@
-<!doctype html>
+!<doctype html>
 <html>
   <head>
     <meta charset="utf-8">
@@ -70,7 +70,7 @@
             <li class="fragment">A way to manage asynchronicity.</li>
             <li class="fragment">This is NOT a talk about React.</li>
             <li class="fragment">Based on the ReactiveX library.</li>
-            <li class="fragment">Usable in many languages in addition to JavaScript: PHP, Java, Scala, C#, C+++, Pyhton and others.</li>
+            <li class="fragment">Usable in many languages in addition to JavaScript: PHP, Java, Scala, C#, C++, Pyhton and others.</li>
           </ul>
           <aside class="notes">
             <strong>Fine, but.... what does reactive programming really offer?</strong>
@@ -226,6 +226,7 @@ doc = memResponse;
             <li class="fragment">Following the execution flow may not be trivial.</li>
             <li class="fragment">They are not lazy.</li>
             <li class="fragment">They are not cancelables.</li>
+            <li class="fragment">Promise hell.</li>
           </ul>
           <aside class="notes">
           <ul>
@@ -257,21 +258,27 @@ doc = memResponse;
          <aside class="notes">
             <ul>
             </ul>
-          <strong>Let's see the necessary concepts.</strong>
+          <strong>Before explaining why Reactive Programming is a great way of dealing with asynchronicity let's see the basics of Reactive Programming. We need it to believe what I'm claiming. So let's see the necessary concepts</strong>
           </aside>
         </section>
 
 
         <section>
           <div class="header">
-            <span>Data pipes</span>
+            <span>Plumbing!</span>
           </div>
           <ul>
+            <li class="fragment">Is about creating data pipes.</li>
             <li class="fragment">The pipe that certain data crosses.</li>
-            <li class="fragment">Abstract idea, not a data structure.</li>
+            <li class="fragment">Abstract idea, not a data structure <sup>*</sup>.</li>
           </ul>
           <aside class="notes">
-            <strong>What would be a simple pipe?</strong>
+            <ul>
+              <li>In RP you create pipes for the data, as said before: data pipes that process and transform the data that crosses them.</li>
+              <li></Li>
+            </ul>
+            <strong>With those pipes we build a plumbing system to move our asynchronous data around, transform it and affect our application components.
+            So, what would be a simple pipe?</strong>
           </aside>
         </section>
 
@@ -442,6 +449,11 @@ jQuery('#grip').click(function() {
           </aside>
         </section>
 
+         <section>
+          <div>
+           <img src="assets/images/chrono.png">
+          </div>
+        </section>
 
         <section>
           <section>
@@ -464,6 +476,10 @@ jQuery('#grip').click(function() {
               </code>
             </pre>
           </section>
+
+
+
+
 
 
 
@@ -510,7 +526,7 @@ jQuery('#grip').click(function() {
           <ul>
             <li class="fragment">Detect clicks in a row (double, triple, etc).</li>
             <li class="fragment">Time is counted from the first click.</li>
-            <a class="fragment" href="http://jsfiddle.net/aaah4aef/">http://jsfiddle.net/okpjzsfh/</a>
+            <a class="fragment" href="http://jsfiddle.net/okpjzsfh/5/">http://jsfiddle.net/okpjzsfh/5/</a>
           </ul>
           <aside class="notes">
             Let's do the part that detects when we're crushing the button.
@@ -620,10 +636,101 @@ jQuery('#grip').click(function() {
   .map(() => 'https://example.com/api/classification'
   .flatMap(url => http.get(url))
   .map(items => items.map(new MyItem(item)))
-  <span class="fragment">.catch(err => Rx.Observable.of([]))
+  <span class="fragment">.catch(err => Rx.Observable.of(this.list))
   .subscribe(instances => this.list = instances);</span>
             </code>
           </pre>
+        </section>
+
+
+
+        <section>
+          <div class="header">
+            <span>Data composite</span>
+          </div>
+          <span>Aggregate multiple asychronous data sources.</span>
+          <pre>
+            <code data-trim data-noescape>
+<span class="fragment">Rx.Observable.combineLatest(</span>
+  <span class="fragment">dataStreamOne,
+  dataStreamTwo,
+  dataStreamThree,</span>
+  <span class="fragment">combineFunction)</span>
+  <span class="fragment">.catch(err => errorHanlderFunction(err))</span>
+  <span class="fragment">.subscribe(data=> processDataUpdate(data));</span>
+            </code>
+          </pre>
+        </section>
+
+        <section>
+          <div class="header">
+            <span>Why Reactive Programming</span>
+          </div>
+         <ul>
+            <li class="fragment">You can express from simple reactions to extremely complex reactions to change.</li>
+            <li class="fragment">No more hells.</li>
+            <li class="fragment">Observables <i>resolve</i> as many times as needed.</li>
+            <li class="fragment">Execution flow is intuitive <sup>*</sup>.</li>
+            <li class="fragment">It's lazy.</li>
+            <li class="fragment">It's cancellable.</li>
+          </ul>
+
+          <aside class="notes">
+          <ul>
+            <li>Callbacks only expressed simple reactons</Li>
+            <li>Reactive Programming is not about nesting code.</Li>
+            <li>Observables emmit values, not just one.</Li>
+            <li>Just read the pipe! For complex pipes is not so abvious, but I bet it would be worse with promises. Of course you have to be used to operators.</Li>
+            <li>And could be not lazy</Li>
+            <li>Save your resources!</Li>
+          </ul>
+          </aside>
+        </section>
+
+
+
+
+
+
+
+        <section>
+          <div class="header">
+            <span>When to use Reactive Programming?</span>
+          </div>
+          <ul>
+            <li class="fragment">With many ashynchonous data sources.</li>
+            <li class="fragment">Complex interactions.</li>
+            <li class="fragment">Complex interdependency.</li>
+            <li class="fragment">To avoid internal state to manage asynchronous events.</li>
+          </ul>
+          <aside class="notes">
+            <ul>
+              <li>Because with Reactive Programming is easier to manage many data sources.</li>
+              <li>Because it's easy to program complex interactions with Reactive Programing plumbing</li>
+              <li>Same as bedore: plumbing makes those things easy.</li>
+              <li>Reactive Programming can help to remove some internal states because that functionality is done by operators and Observables. Remember the button killer example? </li>
+            </ul>
+            <strong>I want to share my personal experience.</strong>
+          </aside>
+        </section>
+
+
+        <section>
+          <div class="header">
+            <span>WorldArchery App</span>
+          </div>
+          <img src="assets/images/wa.png">
+
+          <aside class="notes">
+            <ul>
+              <li>This is the mobile app fo the World Archery Federation, one of our clients.</li>
+              <li>YOu see three dropdowns, each is dependant on previous: if you change, the next dropdowns change.</li>
+              <li>Data is not just retrieved from and endpoint, we need some previous data to render sropdowns (identifiers, labels, etc), so we have dependant data. You could argue that API should be simpler to use and I agree, but it wasn't the case and we had to stick to already existent API.</li>
+              <li>Data is refreshed, sometimes very often. While this view is pretty static, the underlaying library that access API is prepared to refresh data automatically and on demand. This would affect the displayed data. <br>App should work offline, so library builds a local data repository with the fetched data, requesting fresh data when it's outdated.</li>
+              <li>This resulted in a pretty asynchronous hell. We worked on this with AngularJS without reactive programming: we lost some mental health those days. Then we did it again with Angular using Reactive Programming, and although it was hard because we had to learn how to use it, the asynchronous hell just became a complex but funny problem to solve.</li>
+            </ul>
+            <strong>I can't show the code, but let's see another example from a great tutorial.</strong>
+          </aside>
         </section>
 
 
@@ -690,13 +797,23 @@ jQuery('#grip').click(function() {
             <span>Why to adopt?</span>
           </div>
           <ul>
-            <li class="fragment">It can model almost everything.</li>
-            <li class="fragment">They handle any data source.</li>
+            <li class="fragment">It can express very complex models.</li>
+            <li class="fragment">It handles any data source.</li>
             <li class="fragment">Observables: proposed for standard, currently in stage 1.</li>
             <li class="fragment">Less code, improved maintanibility.</li>
             <li class="fragment">Available in many languages.</li>
             <li class="fragment">Asynchronicity.</li>
           </ul>
+          <aside class="notes">
+            <ul>
+              <li></li>
+              <li></li>
+              <li></li>
+              <li></li>
+              <li>If you deal with asynchronicity you probably may beneficit using Reactive Programming</li>
+            </ul>
+            <strong>I want to share my personal experience.</strong>
+          </aside>
         </section>
 
 
@@ -751,7 +868,7 @@ jQuery('#grip').click(function() {
         ]
       });
 
-          setTimeout(() => Reveal.slide(25), 100);
+          setTimeout(() => Reveal.slide(30), 100);
     </script>
 
     <!--
