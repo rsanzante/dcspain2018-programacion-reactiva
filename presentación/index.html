@@ -111,8 +111,8 @@
           <ul>
             <li class="fragment">Unpredictable events over time.</li>
             <li class="fragment">The browser environment is asynchronous.</li>
-            <li class="fragment">User interaction (mouse, keyboard, etc).</li>
             <li class="fragment">AJAX.</li>
+            <li class="fragment">User interaction (mouse, keyboard, etc).</li>
             <li class="fragment">Timers or animations</li>
             <li class="fragment">WebSockets.</li>
             <li class="fragment">Workers.</li>
@@ -201,7 +201,7 @@ doc = memResponse;
             <span>Promises</span>
           </div>
           <ul>
-          <li class="fragment">Objects that wrap synchronous operations and react when there is a result.</li>
+          <li class="fragment">Objects that wrap asynchronous operations and react when there is a result.</li>
           <li class="fragment">They're almost callbacks turned into objects.</li>
           <li class="fragment">They greatly improve flow and error management.</li>
           <li class="fragment">Added to ES2015 (ECMAScript 6).</li>
@@ -231,7 +231,7 @@ doc = memResponse;
           <aside class="notes">
           <ul>
             <li>If you want to repeat an action you must run the code that makes the action and processes the response of the promise again. Usually you can do it calling again the function that manages this, so it's not a big deal.. But you'll need to control this re-execution process.<br>
-            This works well for managing setTimeouts or simple HTTP request responses, but falls short when dealing with setInterval or WebSockets, for example. Once the promise has been fullfilled it no longer returns more values. </li>
+            This works well for managing setTimeouts or simple HTTP request responses, but falls short when dealing with setInterval or WebSockets, for example. Once the promise has been fullfilled no longer returns values. </li>
             (https://medium.com/@mpodlasin/promises-vs-observables-4c123c51fe13)
             <li>(https://pouchdb.com/2015/05/18/we-have-a-problem-with-promises.html)</li>
             <li>As the promise is created the code that tries to solve it is executed immediately. It is assumed that the answer is needed now.</li>
@@ -300,7 +300,7 @@ jQuery('#grip').click(function() {
             <img  class="fragment" src="assets/images/camino_simple2_en.png">
           </div>
           <aside class="notes">
-          This is an example of a very simple data path, the simplest of all. An event is generated in the browser, which is captured and the appropriate action is taken, in this case showing an element of the DOM. There we see a flow of data that goes from the broadcast of the event to its reception in the listener. Nothing mysterious.
+          This is an example of a very simple data path, the simplest of all. An event is generated in the browser, which is captured and the appropriate action is taken, in this case showing an element of the DOM. There we see a flow of data that goes from the broadcast of the event to its reception in the listener. Nothing mysterious, we do it every day.
 
           <strong>What would be a complex pipe?</strong>
 
@@ -322,8 +322,7 @@ jQuery('#grip').click(function() {
           <aside class="notes">
           Pipes with transformations are the interesting ones. For example, the transition from one click to a list of objects loaded from a service. At some point the user clicks a button. This click becomes a URL that serves, for example, a competitions's classification  data list: athletes, points obtained, nationality, name, etc. That URL then becomes the data contained in that URL, which will be a JSON. Following that they are transformed into instances of classes ClassificationAthlete containing the data received. Lastly, the final action occurs, which is to assign these objects to an internal variable. If we use an Angular framework, it will happily paint those objects on the screen once they are assigned to the variable.
 
-          The initial data, a click, has travelled a pipe that has been transforming that data, until the final action, the assignment to a variable. This is nothing new, it's done all the time. Through callbacks or promises, we could chain the output of one calling to another, and deal with the complexity that is produced. The more transformations are made to the data and the more steps there are the more complex the process becomes, especially when these steps also have asynchronous operations.
-
+          The initial data, a click, has travelled a pipe that has been transforming that data, until the final action, the assignment to a variable. This is nothing new, it's done all the time using callbacks or promises, we could chain the output of one calling to another, and deal with the complexity that is produced. The good thing of Reactive Programming is hw easy is to define this data management, using those defined pipes.
 
           <strong>Well, now we have to take a deep breath to get into the thick part of the conversation. How do we create these data paths? How do we declare the reactions to change?</strong>
           </aside>
