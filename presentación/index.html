@@ -72,9 +72,6 @@
             <li class="fragment">Based on the ReactiveX library.</li>
             <li class="fragment">Usable in many languages in addition to JavaScript: PHP, Java, Scala, C#, C++, Pyhton and others.</li>
           </ul>
-          <aside class="notes">
-            <strong>Fine, but.... what does reactive programming really offer?</strong>
-          </aside>
         </section>
 
 
@@ -90,15 +87,7 @@
             <li class="fragment">Maintainability.</li>
           </ul>
           <aside class="notes">
-            <ul>
-              <li></li>
-              <li>For example, combining data from different external APIs.</li>
-              <li>Ah, that little asterisk? This is true, but you have to 'deprogram' yourself a little bit from the structured, object-oriented programming paradigm.</li>
-              <li></li>
-            </ul>
-
-            <strong>Fine, but.... What do we mean by asynchronicity?</strong>
-
+              The asterisk is there because while the sentence is true, you have to 'deprogram' yourself a little bit from the structured, object-oriented programming paradigm to read the code.</li>
           </aside>
         </section>
 
@@ -118,9 +107,9 @@
             <li class="fragment">Workers.</li>
           </ul>
           <aside class="notes">
-            <ul>
-              <li>Events that happen over time that we can't predict. This is very common in the browser because it's an asynchronous environment. If we examine a Druapl request we find that the exeuction path is more o less predictible (complex but predictible), and data is available when needed (when a database query is done we asume that result, success or failure, is available in the next line of code, the same for reading a file). In browser this is not true. We don't know when many operations will return their data: AJAX operations are the main example, but it's the same for workers, for example. User interaction, WebSockets, timers and animations are other sources of asynchronicty. </li>
-            </ul>
+              Events that happen over time that we can't predict. This is very common in the browser because it's an asynchronous environment. If we examine a Drupal request we find that the exeuction path is more o less predictible (complex but predictible), and data is available when needed (when a database query is done we asume that result, success or failure, is available in the next line of code, the same for reading a file). In browser this is not true. We don't know when many operations will return their data: AJAX operations are the main example, but it's the same for workers, for example. User interaction, WebSockets, timers and animations are other sources of asynchronicty.
+            <br>
+            <br>
             <strong>How we can manage this uncertainty, this asynchronicty?</strong>
 
           </aside>
@@ -152,9 +141,6 @@ jQuery('#grip').click(function() {
               <li>Becasue of their simplicity they don't allow many possibilities. Only recommended for simple reactions upon events.</li>
               <li>Things start to get complicated when within a callback you need more actions to process the response that require more callbacks.</li>
             </ul>
-
-
-
           </aside>
         </section>
 
@@ -188,9 +174,9 @@ doc = memResponse;
               <li>Callback hell is typical from callbacks. It's a nested code because of successive callbacks.</li>
               <li>This code is not easy to read, is not clean and is not elegant.</li>
             </ul>
-
-          <strong>What was the solution to this problem? Promises</strong>
-
+            <br>
+            <br>
+            <strong>What was the solution to this problem? Promises.</strong>
           </aside>
         </section>
 
@@ -210,6 +196,8 @@ doc = memResponse;
             <ul>
               <li>They allow to define a reaction on succees and a reaction on error. They also allow to chain actions for a response.</li>
             </ul>
+            <br>
+            <br>
             <strong>They are a big improvement, but they have certain limitations.</strong>
           <aside>
           </aside>
@@ -231,13 +219,13 @@ doc = memResponse;
           <aside class="notes">
           <ul>
             <li>If you want to repeat an action you must run the code that makes the action and processes the response of the promise again. Usually you can do it calling again the function that manages this, so it's not a big deal.. But you'll need to control this re-execution process.<br>
-            This works well for managing setTimeouts or simple HTTP request responses, but falls short when dealing with setInterval or WebSockets, for example. Once the promise has been fullfilled no longer returns values. </li>
-            (https://medium.com/@mpodlasin/promises-vs-observables-4c123c51fe13)
-            <li>(https://pouchdb.com/2015/05/18/we-have-a-problem-with-promises.html)</li>
+            This works well for managing setTimeouts or simple HTTP request responses, but falls short when dealing with setInterval or WebSockets, for example. Once the promise has been fullfilled no longer returns values. Get more info about this here: <a href="https://medium.com/@mpodlasin/promises-vs-observables-4c123c51fe13">Promises vs Observables</a>, by Mateusz Podlasin.</li>
+            <li>See article by Nolan Lawson, PouchDB core team developer: <a href="https://pouchdb.com/2015/05/18/we-have-a-problem-with-promises.html">We have a problem with promises</a></li>
             <li>As the promise is created the code that tries to solve it is executed immediately. It is assumed that the answer is needed now.</li>
             <li>Except using some libraries like Bluebird, once the promise is created it will try to resolve or fail, but it cannot be cancelled (although it can be ignored, of course). This can result in wasted resources.</li>
           </ul>
-
+          <br>
+          <br>
           <strong>Although they are a great improvement over callbacks, the following strategy is even more powerful.</strong>
           </aside>
         </section>
@@ -256,9 +244,7 @@ doc = memResponse;
             <li class="fragment">Similar example: how Angular, React and Vue.js update rendering on data change.</li>
           </ul>
          <aside class="notes">
-            <ul>
-            </ul>
-          <strong>Before explaining why Reactive Programming is a great way of dealing with asynchronicity let's see the basics of Reactive Programming. We need it to believe what I'm claiming. So let's see the necessary concepts</strong>
+          <strong>Before explaining why Reactive Programming is a great way of dealing with asynchronicity let's see the basics of Reactive Programming. We need it to believe what I'm claiming. So let's see the necessary concepts.</strong>
           </aside>
         </section>
 
@@ -274,11 +260,15 @@ doc = memResponse;
           </ul>
           <aside class="notes">
             <ul>
-              <li>In RP you create pipes for the data, as said before: data pipes that process and transform the data that crosses them.</li>
-              <li></Li>
+              <li>In Reactive Programming you create pipes for the data, as said before: data pipes that process and transform the data that crosses them.</li>
+              <li>This talk was written before RxJS 6. It turns out that RxJS added a pipe method in 5.5 to create the pipes from an observable, and now is mandatory in version 6. So it seems that the comparison was good, now the pipes are more than an abstract idea in this version of RxJS. See more information in this article by Antonio Calapez: <a href="https://blog.hackages.io/rxjs-5-5-piping-all-the-things-9d469d1b3f44">RxJS 5.5, piping all the things
+</a>.</Li>
             </ul>
-            <strong>With those pipes we build a plumbing system to move our asynchronous data around, transform it and affect our application components.
-            So, what would be a simple pipe?</strong>
+            <br>
+            <br>
+            <strong>With those pipes we build a plumbing system to move our asynchronous data around, transform it and affect our application components.</strong>
+            <br>
+            <strong>What would be a simple pipe?</strong>
           </aside>
         </section>
 
@@ -301,7 +291,8 @@ jQuery('#grip').click(function() {
           </div>
           <aside class="notes">
           This is an example of a very simple data path, the simplest of all. An event is generated in the browser, which is captured and the appropriate action is taken, in this case showing an element of the DOM. There we see a flow of data that goes from the broadcast of the event to its reception in the listener. Nothing mysterious, we do it every day.
-
+          <br>
+          <br>
           <strong>What would be a complex pipe?</strong>
 
           </aside>
@@ -320,11 +311,13 @@ jQuery('#grip').click(function() {
            <img src="assets/images/camino_transformaciones_ejemplo_en.png">
           </div>
           <aside class="notes">
-          Pipes with transformations are the interesting ones. For example, the transition from one click to a list of objects loaded from a service. At some point the user clicks a button. This click becomes a URL that serves, for example, a competitions's classification  data list: athletes, points obtained, nationality, name, etc. That URL then becomes the data contained in that URL, which will be a JSON. Following that they are transformed into instances of classes ClassificationAthlete containing the data received. Lastly, the final action occurs, which is to assign these objects to an internal variable. If we use an Angular framework, it will happily paint those objects on the screen once they are assigned to the variable.
+          Pipes with transformations are the interesting ones. For example, the transition from one click to a list of objects loaded from a service. At some point the user clicks a button. This click becomes a URL that serves, for example, a competitions's classification  data list: athletes, points obtained, nationality, name, etc. That URL then becomes the data contained in that URL, which will be a JSON. Following that the JSON content is transformed into instances of a custom class that contains the data received. Lastly, the final action occurs, which is to assign these objects to an internal variable. If we use an Angular framework, it will happily paint those objects on the screen once they are assigned to the variable.
 
-          The initial data, a click, has travelled a pipe that has been transforming that data, until the final action, the assignment to a variable. This is nothing new, it's done all the time using callbacks or promises, we could chain the output of one calling to another, and deal with the complexity that is produced. The good thing of Reactive Programming is hw easy is to define this data management, using those defined pipes.
+          So, the initial data, a click, has travelled a pipe that has been transforming that data, until the final action, the assignment to a variable. This is nothing new, it's done all the time using callbacks or promises. We could chain the output of one calling to another, and deal with the complexity that is produced. The good thing of Reactive Programming is how easy is to define this data management, using those defined pipes, creating that plumbing system.
+          <br>
+          <br>
 
-          <strong>Well, now we have to take a deep breath to get into the thick part of the conversation. How do we create these data paths? How do we declare the reactions to change?</strong>
+          <strong>Well, now we have to take a deep breath to get into the thick part of the talk. How do we create these data pipes? How do we declare the reactions to change?</strong>
           </aside>
         </section>
 
@@ -340,21 +333,18 @@ jQuery('#grip').click(function() {
             <li class="fragment">They emmit data until they finish or an error is triggered.</li>
           </ul>
         <aside class="notes">
-            First main piece: Observables<br>
+            First main piece: Observables
+            <br>
+            <br>
             <ul>
               <li>Let's say that are just things that can be observed, boxes where the data comes from, basically they are the observed part of the Observer pattern.</li>
-              <li>They are more than just data stream, but I don't want to get into thick technical definitions, so let's say they are data streams</li>
-              <li></li>
-              In the previous diagrams you could say that they are the little arrows that connect the different boxes. <br>
+              <li>They are more than just data stream, but I don't want to get into thick technical definitions, so let's say they are data streams.</li>
+              <li>In the previous diagrams you could say that they are the little arrows that connect the different boxes.</li>
             </ul>
-<!--
-          Ben Leash, qués un observable haciendo uno.
-          https://medium.com/@benlesh/learning-observable-by-building-observable-d5da57405d87
-
-
-          https://medium.com/@jshvarts/read-marble-diagrams-like-a-pro-3d72934d3ef5-->
-
-          <strong>Change over time and are difficult to visaulize. Becasue of this, we have the marble diagrams.</strong>
+            If you want a deep explanations see this article by Ben Lesh: <a href="https://medium.com/@benlesh/learning-observable-by-building-observable-d5da57405d87">Learning Observable By Building Observable</a>
+            <br>
+            <br>
+            <strong>Observables change over time and are difficult to visaulize. Becasue of this, we have the marble diagrams.</strong>
 
           </aside>
         </section>
@@ -372,10 +362,12 @@ jQuery('#grip').click(function() {
           </ul>
           <aside class="notes">
             Visualizing how data traverses the pipe is very important to understand what is happening. Marble diagrams were designed for this purpose. They are read from left to right, representing time. Each ball is a value emitted by the Observable. The vertical line indicates that the flow has ended, and the cross indicates that it has emitted an error. In both cases the flow is closed.
-
-
-
-            https://rxviz.com/examples/mouse-move
+            <br>
+            <br>
+            More details about marble diagrams: <a href="https://medium.com/@jshvarts/read-marble-diagrams-like-a-pro-3d72934d3ef5">Understanding Marble Diagrams for Reactive Streams</a>.
+            <br>
+            <br>
+            An interactive marble diagram: <a href="https://rxviz.com/examples/mouse-move">Mouse move example</a>.
 
           </aside>
         </section>
@@ -394,8 +386,9 @@ jQuery('#grip').click(function() {
             <li class="fragment">They can combine streams</li>
           </ul>
           <aside class="notes">
-            The second fundamental part is the operators. In the previous diagram they would be the boxes. It is what allows data to be transformed, in more or less complex ways, but it also allows flows to be modulated (for example, preventing data from passing if it does not meet certain properties). They also serve to create Observables (for example, to create an Observable from an event of the DOM, so that when that event occurs the Observable emits the event).
-
+            The second fundamental part is the operators. In the previous diagram they would be the boxes. It is what allows data to be transformed, in more or less complex ways, but it also allows flows to be modulated (for example, preventing data from passing if it does not meet certain condition). They also serve to create Observables (for example, to create an Observable from an event of the DOM, so that when that event occurs the Observable emits the event).
+            <br>
+            <br>
             <strong>Let's see a couple of examples.</strong>
           </aside>
         </section>
@@ -423,8 +416,10 @@ jQuery('#grip').click(function() {
             <img src="assets/images/marble_map.png">
           </div>
           <aside class="notes">
-              Si hay tiempo poenr ejemplos interactivos: http://rxmarbles.com/
-          <strong>Let's see some code examples</strong>
+            See interactive marble diagrams to know how different operators work in <a href="http://rxmarbles.com/">RxJS Marbles</a>.
+            <br>
+            <br>
+            <strong>Let's see some code examples.</strong>
           </aside>
         </section>
 
@@ -444,7 +439,7 @@ jQuery('#grip').click(function() {
           </div>
 
           <aside class="notes">
-          Let's create a chronometre using streams. The example is a bit absurd, it does not show the power of the streams, but it does show how they work.
+            Let's create a chronometre using streams. The example is a bit absurd, it does not show the power of the streams, but it does show how they work.
           </aside>
         </section>
 
@@ -478,15 +473,11 @@ jQuery('#grip').click(function() {
 
 
 
-
-
-
-
           <section>
-          <div class="header">
-            <span>Event diagram</span>
-          </div>
-<br>
+            <div class="header">
+              <span>Event diagram</span>
+            </div>
+            <br>
             <pre>
   clock$  ---1---2---3---4---5---6---7---8---9------>
                     do
@@ -657,19 +648,15 @@ jQuery('#grip').click(function() {
 
           <aside class="notes">
           <ul>
-            <li>Callbacks only expressed simple reactons</Li>
+            <li>Callbacks only express simple reactons.</Li>
             <li>Reactive Programming is not about nesting code.</Li>
             <li>Observables emmit values, not just one.</Li>
-            <li>Just read the pipe! For complex pipes is not so abvious, but I bet it would be worse with promises. Of course you have to be used to operators.</Li>
+            <li>Just read the pipe! For complex pipes is not so obvious, but I bet it would be worse with promises. Of course you have to be used to operators.</Li>
             <li>And could be not lazy</Li>
             <li>Save your resources!</Li>
           </ul>
           </aside>
         </section>
-
-
-
-
 
 
 
@@ -687,9 +674,11 @@ jQuery('#grip').click(function() {
             <ul>
               <li>Because with Reactive Programming is easier to manage many data sources.</li>
               <li>Because it's easy to program complex interactions with Reactive Programing plumbing</li>
-              <li>Same as bedore: plumbing makes those things easy.</li>
-              <li>Reactive Programming can help to remove some internal states because that functionality is done by operators and Observables. Remember the button killer example? </li>
+              <li>Same as before: plumbing makes those things easy.</li>
+              <li>Reactive Programming can help to remove some internal states because that functionality is done by operators and Observables. Remember the button killer example? Doing that with promises or callbacks would need some timers and keeping some internal state.</li>
             </ul>
+            <br>
+            <br>
             <strong>I want to share my personal experience.</strong>
           </aside>
         </section>
@@ -704,12 +693,14 @@ jQuery('#grip').click(function() {
           <aside class="notes">
             <ul>
               <li>This is the mobile app fo the World Archery Federation, one of our clients.</li>
-              <li>YOu see three dropdowns, each is dependant on previous: if you change, the next dropdowns change.</li>
-              <li>Data is not just retrieved from and endpoint, we need some previous data to render sropdowns (identifiers, labels, etc), so we have dependant data. You could argue that API should be simpler to use and I agree, but it wasn't the case and we had to stick to already existent API.</li>
+              <li>You see three dropdowns, each is dependant on previous: if you change, the next dropdowns change.</li>
+              <li>Data is not just retrieved from and endpoint, we need some previous data to render sropdowns (identifiers, labels, etc), so we have dependant data. You could argue that API should be simpler to use and I would agree, but it wasn't the case and we had to stick to already existent API.</li>
               <li>Data is refreshed, sometimes very often. While this view is pretty static, the underlaying library that access API is prepared to refresh data automatically and on demand. This would affect the displayed data. <br>App should work offline, so library builds a local data repository with the fetched data, requesting fresh data when it's outdated.</li>
               <li>This resulted in a pretty asynchronous hell. We worked on this with AngularJS without reactive programming: we lost some mental health those days. Then we did it again with Angular using Reactive Programming, and although it was hard because we had to learn how to use it, the asynchronous hell just became a complex but funny problem to solve.</li>
             </ul>
-            <strong>I can't show the code, but let's see another example from a great tutorial.</strong>
+            <br>
+            <br>
+            Get the application for <a href="https://play.google.com/store/apps/details?id=org.worldarchery.live">Android</a> or <a href="https://itunes.apple.com/us/app/world-archery/id825608776">iOS</a>.
           </aside>
         </section>
 
@@ -757,14 +748,7 @@ jQuery('#grip').click(function() {
             <li class="fragment">Asynchronicity.</li>
           </ul>
           <aside class="notes">
-            <ul>
-              <li></li>
-              <li></li>
-              <li></li>
-              <li></li>
-              <li>If you deal with asynchronicity you probably may beneficit using Reactive Programming</li>
-            </ul>
-            <strong>I want to share my personal experience.</strong>
+            <strong>If you deal with asynchronicity you probably may beneficit using Reactive Programming.</strong>
           </aside>
         </section>
 
@@ -780,8 +764,6 @@ jQuery('#grip').click(function() {
             <li class="fragment">Rx Visualizer: https://rxviz.com/</li>
             <li class="fragment">ReactiveX: http://reactivex.io/</li>
             <li class="fragment">Ben Lesh: https://medium.com/@benlesh/</li>
-
-
           </ul>
         </section>
 
@@ -820,13 +802,7 @@ jQuery('#grip').click(function() {
         ]
       });
 
-          //setTimeout(() => Reveal.slide(30), 100);
+          //setTimeout(() => Reveal.slide(1), 100);
     </script>
-
-    <!--
-
-     https://github.com/tc39/proposal-observable
-     https://blog.hackages.io/rxjs-5-5-piping-all-the-things-9d469d1b3f44
-
   </body>
 </html>
